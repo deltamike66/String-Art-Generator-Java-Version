@@ -26,7 +26,6 @@ public class Art {
 	private int brightness;
 	private int[] nail;
 
-
 	public Art(int nails, int lines) {
 		this.nails = nails;
 		this.lines = lines;
