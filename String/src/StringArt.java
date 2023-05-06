@@ -35,6 +35,7 @@ public class StringArt {
 	
 	private File fileImage;
 	private BufferedImage image;
+	
 
 	private JFrame frmStringArtBy;
 	private JButton btn_loadImage;
