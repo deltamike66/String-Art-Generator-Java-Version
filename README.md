@@ -1,3 +1,5 @@
+# String Art Generator
+
 ![Preview of Software](sample.png " Software Preview")
 
 This software is a "String Art" generator. Starting from an image, a file is created with the number of nails to join to have a result similar to the original.
