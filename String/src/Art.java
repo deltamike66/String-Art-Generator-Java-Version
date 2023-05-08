@@ -43,6 +43,20 @@ public class Art {
 		newArt();
 	}
 	
+	public Art(int nails, int lines, float opacity, int brightness, float thickness) {
+		this.nails = nails;
+		this.lines = lines;
+		this.nailX = new int[this.nails];
+		this.nailY = new int[this.nails];
+		this.nail = new int[this.lines];
+		this.startNail = 0;
+		this.destNail = 0;
+		this.opacity = opacity;
+		this.brightness = 255*brightness/100;
+		this.thickness = thickness;
+		newArt();
+	}
+	
 	private void newArt() {
 		this.art = new BufferedImage(510,510,1);
 		this.g2d_art = this.art.createGraphics();
