@@ -1,4 +1,4 @@
-
+![alt text]([sample.jpg](https://github.com/deltamike66/StringArt/blob/6a2d6a4f655d2354fc62a5b974d36ba16a6882e0/sample.jpg)?raw=true)
 
 This software is a "String Art" generator. Starting from an image, a file is created with the number of nails to join to have a result similar to the original.
 
