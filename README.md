@@ -1,8 +1,8 @@
 # String Art Generator
 
-![Preview of Software](sample.png " Software Preview")
-
 This software is a "String Art" generator. Starting from an image, a file is created with the number of nails to join to have a result similar to the original.
+
+![Preview of Software](sample.png " Software Preview")
 
 How the software works:
 The algorithm used is apparently very simple. The nails are numbered starting from the number 0 in a clockwise direction, the zero nail is placed on the east side.
