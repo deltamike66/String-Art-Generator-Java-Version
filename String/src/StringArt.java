@@ -378,7 +378,11 @@ public class StringArt {
 	}
 	
 	private void drawNails() {
-		art = new Art((int)spinner_nails.getValue(), (int)spinner_lines.getValue());
+		art = new Art((int)spinner_nails.getValue(), 
+					 (int)spinner_lines.getValue(),
+					 slider_opacity.getValue()/100f,
+					 slider_brightness.getValue(),
+					 sliderThickness.getValue()/100f);
 		lbl_art.setIcon(new ImageIcon(art.drawNails()));
 	}
 	
@@ -409,6 +413,7 @@ public class StringArt {
 			double zoom = slider_zoom.getValue()/500.0;
 			int bright = slider_brightness.getValue();
 			int opacity = slider_opacity.getValue();
+			float thick = sliderThickness.getValue()/100f;
 		    
 			File fileToSave = fileChooser.getSelectedFile();
 		    int[] nail = new int[art.getLines()];
@@ -421,6 +426,7 @@ public class StringArt {
 		    out.println("Zoom: " + zoom);
 		    out.println("Brightness: " + bright);
 		    out.println("Opacity: " + opacity);
+		    out.println("Thickness: " + thick);
 		    
 		    for (int l=0;l<nail.length; l++) {
 		    	if (l%20 == 0) {
