@@ -1,9 +1,10 @@
 import java.awt.AlphaComposite;
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.Stroke;
 import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
@@ -25,6 +26,8 @@ public class Art {
 	private float opacity;
 	private int brightness;
 	private int[] nail;
+	private float thickness;
+
 
 	public Art(int nails, int lines) {
 		this.nails = nails;
@@ -36,6 +39,7 @@ public class Art {
 		this.destNail = 0;
 		this.opacity = 0.5f;
 		this.brightness = 255;
+		this.thickness = 1f;
 		newArt();
 	}
 	
@@ -85,6 +89,10 @@ public class Art {
 		this.brightness = 255*value/100;   // 50:100 = x:255
 	}
 	
+	public void setThickness(float thickness) {
+		this.thickness = thickness;
+	}
+
 	public BufferedImage drawNails() {
     	double incDegree = 2 * Math.PI / nails;
 		this.g2d_art.setColor(Color.BLUE);
@@ -110,7 +118,7 @@ public class Art {
 		
 		ImageIcon imageIcon= (ImageIcon) lbl.getIcon();
 		BufferedImage image = new BufferedImage(imageIcon.getIconWidth(), imageIcon.getIconHeight(), BufferedImage.TYPE_INT_RGB);
-		Graphics g = image.createGraphics();
+		Graphics2D g = image.createGraphics();
 		imageIcon.paintIcon(null, g, 0, 0);
 		g.dispose();
 		
@@ -152,11 +160,15 @@ public class Art {
 			this.destNail = this.maxAvg(this.startNail);
 			
 			this.g2d_art.setColor(Color.BLACK); // Line to art
+			Stroke strokePhoto = new BasicStroke(thickness);
+			g2d_art.setStroke(strokePhoto);
 			AlphaComposite alcom = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity);
 			this.g2d_art.setComposite(alcom);
 			
 			this.g2d_art.drawLine(this.nailX[this.startNail], this.nailY[this.startNail], this.nailX[this.destNail], this.nailY[this.destNail]);
-			g = this.photo.getGraphics();
+			g = (Graphics2D) this.photo.getGraphics();
+			Stroke strokeArt = new BasicStroke(thickness+0.2f);
+			g.setStroke(strokeArt);
 			g.setColor(new Color(this.brightness,this.brightness,this.brightness)); // Line to delete the photo
 			g.drawLine(this.nailX[this.startNail], this.nailY[this.startNail], this.nailX[this.destNail], this.nailY[this.destNail]);
 			this.startNail = this.destNail;
