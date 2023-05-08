@@ -142,7 +142,7 @@ public class Art {
 		this.g2d_art = art.createGraphics();
 		this.g2d_art.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		this.g2d_art.setPaint(new Color(255,255,255));
-    	this.g2d_art.fillRect(0, 0, art.getWidth(), art.getHeight());
+    		this.g2d_art.fillRect(0, 0, art.getWidth(), art.getHeight());
 		
 		double incDegree = 2 * Math.PI / nails;
 		this.g2d_art.setColor(Color.BLUE);
