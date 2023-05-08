@@ -57,6 +57,8 @@ public class StringArt {
 	private JLabel lblOpacity_1;
 	private JLabel lblBrightness_1;
 	private JLabel lblZoom_1;
+	private JSlider sliderThickness;
+	private JLabel lblTickness;
 
 	/**
 	 * Launch the application.
@@ -170,7 +172,7 @@ public class StringArt {
 			}
 		});
 		btn_generate.setEnabled(false);
-		btn_generate.setBounds(583, 380, 130, 25);
+		btn_generate.setBounds(583, 411, 130, 25);
 		frmStringArtBy.getContentPane().add(btn_generate);
 		
 		lbl_art = new JLabel("");
@@ -262,28 +264,50 @@ public class StringArt {
 			}
 		});
 		btnSave.setEnabled(false);
-		btnSave.setBounds(583, 515, 130, 25);
+		btnSave.setBounds(583, 533, 130, 25);
 		frmStringArtBy.getContentPane().add(btnSave);
 		
 		lblXOffset = new JLabel("X offset:");
-		lblXOffset.setBounds(589, 417, 140, 14);
+		lblXOffset.setBounds(583, 442, 140, 14);
 		frmStringArtBy.getContentPane().add(lblXOffset);
 		
 		lblYOffset = new JLabel("Y offset:");
-		lblYOffset.setBounds(589, 435, 140, 14);
+		lblYOffset.setBounds(583, 460, 140, 14);
 		frmStringArtBy.getContentPane().add(lblYOffset);
 		
 		lblZoom_1 = new JLabel("Zoom:");
-		lblZoom_1.setBounds(589, 453, 140, 14);
+		lblZoom_1.setBounds(583, 478, 140, 14);
 		frmStringArtBy.getContentPane().add(lblZoom_1);
 		
 		lblBrightness_1 = new JLabel("Brightness:");
-		lblBrightness_1.setBounds(590, 471, 140, 14);
+		lblBrightness_1.setBounds(584, 496, 140, 14);
 		frmStringArtBy.getContentPane().add(lblBrightness_1);
 		
 		lblOpacity_1 = new JLabel("Line opacity:");
-		lblOpacity_1.setBounds(589, 489, 140, 14);
+		lblOpacity_1.setBounds(583, 514, 140, 14);
 		frmStringArtBy.getContentPane().add(lblOpacity_1);
+		
+		JPanel panel_2 = new JPanel();
+		panel_2.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		panel_2.setBounds(532, 344, 234, 53);
+		frmStringArtBy.getContentPane().add(panel_2);
+		panel_2.setLayout(null);
+		
+		sliderThickness = new JSlider(SwingConstants.HORIZONTAL, 0, 300, 100);
+		sliderThickness.setMaximum(300);
+		sliderThickness.setMinorTickSpacing(10);
+		sliderThickness.setBounds(12, 22, 210, 27);
+		sliderThickness.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				updateTickness();
+			}
+		});
+		panel_2.add(sliderThickness);
+		
+		lblTickness = new JLabel("Thickness of line:");
+		lblTickness.setFont(new Font("Dialog", Font.PLAIN, 10));
+		lblTickness.setBounds(18, 9, 192, 15);
+		panel_2.add(lblTickness);
 		
 		drawNails();
 	}
@@ -309,6 +333,7 @@ public class StringArt {
 			 slider_opacity.setEnabled(true);
 			 slider_zoom.setEnabled(true);
 			 btnSave.setEnabled(true);
+			 resetValue();
 		}
 	}
 	
@@ -336,11 +361,13 @@ public class StringArt {
 		double zoom = slider_zoom.getValue()/500.0;
 		int bright = slider_brightness.getValue();
 		int opacity = slider_opacity.getValue();
+		double thick = sliderThickness.getValue()/100.0;
 		lblXOffset.setText("X Offset: " + scrollX);
 		lblYOffset.setText("Y Offset: " + scrollY);
 		lblZoom_1.setText("Zoom: " + zoom);
 		lblBrightness_1.setText("Brightness: " + bright);
 		lblOpacity_1.setText("Opacity: " + opacity);
+		lblTickness.setText("Thickness of line: " + thick);
 	}
 	
 	private void generateArt() {
@@ -404,6 +431,20 @@ public class StringArt {
 		    }
 		    out.close();
 		}
-		
+	}
+	
+	private void updateTickness() {
+		updateLabel();
+		art.setThickness(sliderThickness.getValue()/100f);
+	}
+	
+	private void resetValue() {
+		scrollPane.getHorizontalScrollBar().setValue(0);
+		scrollPane.getVerticalScrollBar().setValue(0);
+		slider_zoom.setValue(500);
+		slider_brightness.setValue(100);
+		slider_opacity.setValue(50);
+		sliderThickness.setValue(100);
+		updateLabel();
 	}
 }
