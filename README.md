@@ -2,7 +2,17 @@
 
 This software is a "String Art" generator. Starting from an image, a file is created with the number of nails to join to have a result similar to the original.
 
-![Preview of Software](sample.png " Software Preview")
+![Preview of Software](String/img/CircleArt.png "Circle Art")
+
+For Circle, the Nail "0" is in EAST Side and the numbering is clockWise
+
+![Preview of Software](String/img/SquareArt.png "Square Art")
+
+For the Square the Nail "0" is on the upper right corner and the numbering is clockwise.
+
+![Preview of Software](String/img/GridArt.png "Grid Art")
+
+For the Grid the Nail "0" is on the upper right corner and the numbering is like the writing direction
 
 How the software works:
 The algorithm used is apparently very simple. The nails are numbered starting from the number 0 in a clockwise direction, the zero nail is placed on the east side.
