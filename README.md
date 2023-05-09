@@ -6,7 +6,7 @@ This software is a "String Art" generator. Starting from an image, a file is cre
 
 How the software works:
 The algorithm used is apparently very simple. The nails are numbered starting from the number 0 in a clockwise direction, the zero nail is placed on the east side.
-We start from nail 0 and draw all the lines to join the other nails, we measure, for each line, the average brightness of the pixels. The winning line is the one with the least brightness, the black line is drawn between the two nails and at the same time a white line is drawn on the original image. The destination peg of the line just drawn becomes the starting peg for the subsequent calculation, and so on until the set lines are exhausted.
+We start from nail 0 and draw all the lines to join the other nails, we measure, for each line, the average brightness of the pixels. The winning line is the one with the least brightness, the black line is drawn between the two nails and at the same time a white line is drawn on the original image. The destination nail of the line just drawn becomes the starting nail for the subsequent calculation, and so on until the set lines are exhausted.
 
 How to use the software:
 Nails: are the number of nails used for the calculation. My suggestion is to drive nails into the wood first and see how many you can fit, and then use that number in my software.
