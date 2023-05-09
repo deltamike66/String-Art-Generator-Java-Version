@@ -31,6 +31,7 @@ import javax.swing.SwingConstants;
 import java.awt.Font;
 
 import javax.swing.JPanel;
+import javax.swing.JComboBox;
 public class StringArt {
 	
 	private File fileImage;
@@ -59,6 +60,8 @@ public class StringArt {
 	private JLabel lblZoom_1;
 	private JSlider sliderThickness;
 	private JLabel lblTickness;
+	private JComboBox<String> comboBoxShape;
+	private JLabel lblNails;
 
 	/**
 	 * Launch the application.
@@ -135,34 +138,40 @@ public class StringArt {
 		lbl_image.setAutoscrolls(true);
 		lbl_image.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		
-		JLabel lblNails = new JLabel("Nails");
+		lblNails = new JLabel("Nails");
+		lblNails.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNails.setFont(new Font("Dialog", Font.PLAIN, 10));
 		lblNails.setFocusTraversalKeysEnabled(false);
-		lblNails.setBounds(583, 50, 43, 15);
+		lblNails.setBounds(970, 17, 103, 15);
 		frmStringArtBy.getContentPane().add(lblNails);
 		
 		spinner_nails = new JSpinner();
+		spinner_nails.setFont(new Font("Dialog", Font.PLAIN, 12));
 		spinner_nails.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
-				drawNails();
+				updateNails();
 			}
 		});
-		spinner_nails.setModel(new SpinnerNumberModel(180, 1, 360, 1));
-		spinner_nails.setBounds(631, 49, 76, 20);
+		spinner_nails.setModel(new SpinnerNumberModel(180, 4, 1000, 1));
+		spinner_nails.setBounds(1078, 16, 76, 20);
 		frmStringArtBy.getContentPane().add(spinner_nails);
 		
 		JLabel lblLines = new JLabel("Lines");
+		lblLines.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblLines.setFont(new Font("Dialog", Font.PLAIN, 10));
 		lblLines.setFocusTraversalKeysEnabled(false);
-		lblLines.setBounds(583, 77, 43, 15);
+		lblLines.setBounds(1155, 18, 50, 15);
 		frmStringArtBy.getContentPane().add(lblLines);
 		
 		spinner_lines = new JSpinner();
+		spinner_lines.setFont(new Font("Dialog", Font.PLAIN, 12));
 		spinner_lines.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				updateLines();
 			}
 		});
 		spinner_lines.setModel(new SpinnerNumberModel(100,1,10000,100));
-		spinner_lines.setBounds(631, 75, 76, 20);
+		spinner_lines.setBounds(1208, 16, 76, 20);
 		frmStringArtBy.getContentPane().add(spinner_lines);
 		
 		btn_generate = new JButton("Generate Art");
@@ -172,7 +181,7 @@ public class StringArt {
 			}
 		});
 		btn_generate.setEnabled(false);
-		btn_generate.setBounds(583, 411, 130, 25);
+		btn_generate.setBounds(583, 348, 130, 25);
 		frmStringArtBy.getContentPane().add(btn_generate);
 		
 		lbl_art = new JLabel("");
@@ -182,7 +191,7 @@ public class StringArt {
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		panel.setBounds(691, 107, 76, 231);
+		panel.setBounds(691, 51, 76, 231);
 		frmStringArtBy.getContentPane().add(panel);
 		
 		JLabel lblNewLabel = new JLabel("Line Opacity");
@@ -205,7 +214,7 @@ public class StringArt {
 		
 		panel_1 = new JPanel();
 		panel_1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		panel_1.setBounds(611, 107, 76, 231);
+		panel_1.setBounds(611, 51, 76, 231);
 		frmStringArtBy.getContentPane().add(panel_1);
 		
 		JLabel lblB = new JLabel("Brightness");
@@ -229,7 +238,7 @@ public class StringArt {
 		
 		JPanel panel_1_1 = new JPanel();
 		panel_1_1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		panel_1_1.setBounds(531, 107, 76, 231);
+		panel_1_1.setBounds(531, 51, 76, 231);
 		frmStringArtBy.getContentPane().add(panel_1_1);
 		
 		JLabel lblZoom = new JLabel("   Zoom    ");
@@ -289,7 +298,7 @@ public class StringArt {
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		panel_2.setBounds(532, 344, 234, 53);
+		panel_2.setBounds(532, 288, 234, 53);
 		frmStringArtBy.getContentPane().add(panel_2);
 		panel_2.setLayout(null);
 		
@@ -308,6 +317,26 @@ public class StringArt {
 		lblTickness.setFont(new Font("Dialog", Font.PLAIN, 10));
 		lblTickness.setBounds(18, 9, 192, 15);
 		panel_2.add(lblTickness);
+		
+		comboBoxShape = new JComboBox<String>();
+		comboBoxShape.addItem("Circle");
+		comboBoxShape.addItem("Square");
+		comboBoxShape.addItem("Grid");
+		
+		comboBoxShape.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				changeShape();
+			}
+		});
+		comboBoxShape.setFont(new Font("Dialog", Font.PLAIN, 12));
+		comboBoxShape.setBounds(822, 12, 136, 24);
+		frmStringArtBy.getContentPane().add(comboBoxShape);
+		
+		JLabel lblShape = new JLabel("Shape");
+		lblShape.setFont(new Font("Dialog", Font.PLAIN, 10));
+		lblShape.setFocusTraversalKeysEnabled(false);
+		lblShape.setBounds(774, 17, 43, 15);
+		frmStringArtBy.getContentPane().add(lblShape);
 		
 		drawNails();
 	}
@@ -378,12 +407,18 @@ public class StringArt {
 	}
 	
 	private void drawNails() {
-		art = new Art((int)spinner_nails.getValue(), 
+		art = new Art(comboBoxShape.getSelectedIndex(),
+					 (int)spinner_nails.getValue(), 
 					 (int)spinner_lines.getValue(),
 					 slider_opacity.getValue()/100f,
 					 slider_brightness.getValue(),
 					 sliderThickness.getValue()/100f);
 		lbl_art.setIcon(new ImageIcon(art.drawNails()));
+	}
+	
+	private void updateNails() {
+		art.setNails((int)spinner_nails.getValue());
+		drawNails();
 	}
 	
 	private void updateLines() {
@@ -452,5 +487,25 @@ public class StringArt {
 		slider_opacity.setValue(50);
 		sliderThickness.setValue(100);
 		updateLabel();
+	}
+	
+	private void changeShape() {
+		switch (comboBoxShape.getSelectedIndex()) {
+		case 0: // Circle
+			lblNails.setText("Nails");
+			spinner_nails.setValue(180);
+			break;
+		case 1:
+			lblNails.setText("Nails on each side");
+			spinner_nails.setValue(40);
+			break;
+		case 2:
+			lblNails.setText("Nails on each side");
+			spinner_nails.setValue(40);
+			break;
+		default:
+			break;
+		}
+		drawNails();
 	}
 }

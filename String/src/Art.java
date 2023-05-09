@@ -27,24 +27,23 @@ public class Art {
 	private int brightness;
 	private int[] nail;
 	private float thickness;
+	private int shape;
 
-
-	public Art(int nails, int lines) {
-		this.nails = nails;
-		this.lines = lines;
-		this.nailX = new int[this.nails];
-		this.nailY = new int[this.nails];
-		this.nail = new int[this.lines];
-		this.startNail = 0;
-		this.destNail = 0;
-		this.opacity = 0.5f;
-		this.brightness = 255;
-		this.thickness = 1f;
-		newArt();
-	}
-	
-	public Art(int nails, int lines, float opacity, int brightness, float thickness) {
-		this.nails = nails;
+	public Art(int shape, int nails, int lines, float opacity, int brightness, float thickness) {
+		this.shape = shape; // 0 = Circle, 1 = square
+		switch (shape) {
+		case 0: // Circle
+			this.nails = nails;
+			break;
+		case 1: // Square
+			this.nails = nails * 4 - 4;
+			break;
+		case 2:
+			this.nails = nails * nails;
+			break;
+		default:
+			break;
+		}
 		this.lines = lines;
 		this.nailX = new int[this.nails];
 		this.nailY = new int[this.nails];
@@ -81,7 +80,19 @@ public class Art {
 	}
 	
 	public void setNails(int nails) {
-		this.nails = nails;
+		switch (this.shape) {
+		case 0: // Circle
+			this.nails = nails;
+			break;
+		case 1: // Square
+			this.nails = nails * 4 - 4;
+			break;
+		case 2: // Grid
+			this.nails = nails * nails;
+			break;
+		default:
+			break;
+		}
 		this.nailX = new int[this.nails];
 		this.nailY = new int[this.nails];
 	}
@@ -108,17 +119,87 @@ public class Art {
 	}
 
 	public BufferedImage drawNails() {
-    	double incDegree = 2 * Math.PI / nails;
 		this.g2d_art.setColor(Color.BLUE);
-		for (int i=0; i< this.nails; i++) {
-			double x = 255+Math.cos(i*incDegree)*245;
-			double y = 255+Math.sin(i*incDegree)*245;
-			if (i%20 == 0) {
-				this.g2d_art.drawString(Integer.toString(i), (int)(255+Math.cos(i*incDegree)*215), (int)(255+Math.sin(i*incDegree)*215));
+		int index = 0;
+		int nailOnSide = 0;
+		double step = 0;
+		
+		switch (this.shape) {
+		case 0: // Circle
+			double incDegree = 2 * Math.PI / nails;
+			for (int i=0; i< this.nails; i++) {
+				double x = 255+Math.cos(i*incDegree)*245;
+				double y = 255+Math.sin(i*incDegree)*245;
+				if (i%20 == 0) {
+					this.g2d_art.drawString(Integer.toString(i), (int)(255+Math.cos(i*incDegree)*215), (int)(255+Math.sin(i*incDegree)*215));
+				}
+				this.g2d_art.drawOval((int)x, (int)y, 1, 1);
+				this.nailX[i] = (int)x;
+				this.nailY[i] = (int)y;
+			}			
+			break;
+		case 1: // Square
+			
+			nailOnSide = (this.nails + 4) / 4;
+			step = (art.getWidth()-20) / (double)(nailOnSide-1);
+			double x=0;
+			double y=0;
+			
+			this.g2d_art.drawString(Integer.toString(index), 20, 25);
+			for (int i = 0; i< nailOnSide-1; i++) {
+				x = 10 + i * step;
+				y = 10;
+				this.g2d_art.drawOval((int)x, (int)y, 1, 1);
+				this.nailX[index] = (int)x;
+				this.nailY[index] = (int)y;
+				index++;
 			}
-			this.g2d_art.drawOval((int)x, (int)y, 1, 1);
-			this.nailX[i] = (int)x;
-			this.nailY[i] = (int)y;
+			this.g2d_art.drawString(Integer.toString(index), 470, 25);
+			for (int i = 0; i< nailOnSide-1; i++) {
+				x = ((nailOnSide-1) * step)+10;
+				y = 10 + i * step;
+				this.g2d_art.drawOval((int)x, (int)y, 1, 1);
+				this.nailX[index] = (int)x;
+				this.nailY[index] = (int)y;
+				index++;
+			}
+			this.g2d_art.drawString(Integer.toString(index), 470, 490);
+			for (int i = 0; i< nailOnSide-1; i++) {
+				x = (((nailOnSide-1) * step)+20)-(10 + i * step);
+				y = ((nailOnSide-1) * step)+10;
+				this.g2d_art.drawOval((int)x, (int)y, 1, 1);
+				this.nailX[index] = (int)x;
+				this.nailY[index] = (int)y;
+				index++;
+			}
+			this.g2d_art.drawString(Integer.toString(index), 20, 490);
+			for (int i = 0; i< nailOnSide-1; i++) {
+				x = 10;
+				y = (((nailOnSide-1) * step)+20)-(10 + i * step);
+				this.g2d_art.drawOval((int)x, (int)y, 1, 1);
+				this.nailX[index] = (int)x;
+				this.nailY[index] = (int)y;
+				index++;
+			}
+			break;
+		
+		case 2: // Grid
+			index = 0;
+			nailOnSide = (int)Math.sqrt(this.nails);
+			step = (art.getWidth()-20) / (double)(nailOnSide-1);
+			for (int i=0; i<nailOnSide; i++){
+				for (int t=0; t<nailOnSide; t++) {
+					x = 10 + t * step;
+					y = 10 + i * step;
+					this.g2d_art.drawOval((int)x, (int)y, 1, 1);
+					this.nailX[index] = (int)x;
+					this.nailY[index] = (int)y;
+					index++;
+				}
+			}
+			break;
+		default:
+			break;
 		}
 		return this.art;
 	}
@@ -158,15 +239,7 @@ public class Art {
 		this.g2d_art.setPaint(new Color(255,255,255));
     		this.g2d_art.fillRect(0, 0, art.getWidth(), art.getHeight());
 		
-		double incDegree = 2 * Math.PI / nails;
 		this.g2d_art.setColor(Color.BLUE);
-		for (int i=0; i< this.nails; i++) {
-			double x = 255+Math.cos(i*incDegree)*245;
-			double y = 255+Math.sin(i*incDegree)*245;
-			this.g2d_art.drawOval((int)x, (int)y, 1, 1);
-			this.nailX[i] = (int)x;
-			this.nailY[i] = (int)y;
-		}
 		
 		this.startNail = 0;
 		for (int l=0; l<this.lines; l++) {
