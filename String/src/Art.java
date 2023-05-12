@@ -123,18 +123,17 @@ public class Art {
 		int index = 0;
 		int nailOnSide = 0;
 		double step = 0;
-		double incDegree;
 		
 		switch (this.shape) {
 		case 0: // Circle
-			incDegree = 2 * Math.PI / nails;
+			double incDegree = 2 * Math.PI / nails;
 			for (int i=0; i< this.nails; i++) {
 				double x = 255+Math.cos(i*incDegree)*245;
 				double y = 255+Math.sin(i*incDegree)*245;
 				if (i%20 == 0) {
 					this.g2d_art.drawString(Integer.toString(i), (int)(255+Math.cos(i*incDegree)*215), (int)(255+Math.sin(i*incDegree)*215));
 				}
-				art.setRGB((int)x, (int)y, Color.BLUE.getRGB());;
+				this.g2d_art.drawOval((int)x, (int)y, 1, 1);
 				this.nailX[i] = (int)x;
 				this.nailY[i] = (int)y;
 			}			
@@ -150,7 +149,7 @@ public class Art {
 			for (int i = 0; i< nailOnSide-1; i++) {
 				x = 10 + i * step;
 				y = 10;
-				art.setRGB((int)x, (int)y, Color.BLUE.getRGB());;
+				this.g2d_art.drawOval((int)x, (int)y, 1, 1);
 				this.nailX[index] = (int)x;
 				this.nailY[index] = (int)y;
 				index++;
@@ -159,7 +158,7 @@ public class Art {
 			for (int i = 0; i< nailOnSide-1; i++) {
 				x = ((nailOnSide-1) * step)+10;
 				y = 10 + i * step;
-				art.setRGB((int)x, (int)y, Color.BLUE.getRGB());;
+				this.g2d_art.drawOval((int)x, (int)y, 1, 1);
 				this.nailX[index] = (int)x;
 				this.nailY[index] = (int)y;
 				index++;
@@ -168,7 +167,7 @@ public class Art {
 			for (int i = 0; i< nailOnSide-1; i++) {
 				x = (((nailOnSide-1) * step)+20)-(10 + i * step);
 				y = ((nailOnSide-1) * step)+10;
-				art.setRGB((int)x, (int)y, Color.BLUE.getRGB());;
+				this.g2d_art.drawOval((int)x, (int)y, 1, 1);
 				this.nailX[index] = (int)x;
 				this.nailY[index] = (int)y;
 				index++;
@@ -177,7 +176,7 @@ public class Art {
 			for (int i = 0; i< nailOnSide-1; i++) {
 				x = 10;
 				y = (((nailOnSide-1) * step)+20)-(10 + i * step);
-				art.setRGB((int)x, (int)y, Color.BLUE.getRGB());;
+				this.g2d_art.drawOval((int)x, (int)y, 1, 1);
 				this.nailX[index] = (int)x;
 				this.nailY[index] = (int)y;
 				index++;
@@ -192,7 +191,7 @@ public class Art {
 				for (int t=0; t<nailOnSide; t++) {
 					x = 10 + t * step;
 					y = 10 + i * step;
-					art.setRGB((int)x, (int)y, Color.BLUE.getRGB());;
+					this.g2d_art.drawOval((int)x, (int)y, 1, 1);
 					this.nailX[index] = (int)x;
 					this.nailY[index] = (int)y;
 					index++;
