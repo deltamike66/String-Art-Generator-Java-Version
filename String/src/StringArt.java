@@ -32,12 +32,13 @@ import java.awt.Font;
 
 import javax.swing.JPanel;
 import javax.swing.JComboBox;
+import java.awt.event.MouseWheelListener;
+import java.awt.event.MouseWheelEvent;
 public class StringArt {
 	
 	private File fileImage;
 	private BufferedImage image;
 	
-
 	private JFrame frmStringArtBy;
 	private JButton btn_loadImage;
 	private JLabel lbl_pathFile;
@@ -134,6 +135,15 @@ public class StringArt {
 		frmStringArtBy.getContentPane().add(scrollPane);
 		
 		lbl_image = new JLabel("");
+		lbl_image.addMouseWheelListener(new MouseWheelListener() {
+			public void mouseWheelMoved(MouseWheelEvent arg0) {
+				try {
+					zoomImage(arg0.getWheelRotation());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 		scrollPane.setViewportView(lbl_image);
 		lbl_image.setAutoscrolls(true);
 		lbl_image.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -181,7 +191,7 @@ public class StringArt {
 			}
 		});
 		btn_generate.setEnabled(false);
-		btn_generate.setBounds(583, 348, 130, 25);
+		btn_generate.setBounds(583, 408, 130, 25);
 		frmStringArtBy.getContentPane().add(btn_generate);
 		
 		lbl_art = new JLabel("");
@@ -251,7 +261,7 @@ public class StringArt {
 		slider_zoom.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				try {
-					zoomImage();
+					zoomImage(0);
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
@@ -337,7 +347,6 @@ public class StringArt {
 		lblShape.setFocusTraversalKeysEnabled(false);
 		lblShape.setBounds(774, 17, 43, 15);
 		frmStringArtBy.getContentPane().add(lblShape);
-		
 		drawNails();
 	}
 	
@@ -375,7 +384,10 @@ public class StringArt {
 		lbl_image.setIcon(new ImageIcon(image));
 	}
 	
-	private void zoomImage() throws IOException {
+	private void zoomImage(int z) throws IOException {
+		if (z != 0) {
+			slider_zoom.setValue(slider_zoom.getValue()+z*10);
+		}
 		updateLabel();
 		double value = slider_zoom.getValue()/500.0;
 		int width = image.getWidth();
