@@ -318,7 +318,7 @@ public class Art {
 		float avg = 0;
 		float avgMin = 10000;
 		int dest=sn;
-		for (int i=0; i<nails; i++){
+		for (int i=5; i<nails-5; i++){
 			int en = (sn+i)%nails;
 			avg = avgLine(nailX[sn], nailY[sn], nailX[en], nailY[en]);
 			if (avgMin > avg) {
